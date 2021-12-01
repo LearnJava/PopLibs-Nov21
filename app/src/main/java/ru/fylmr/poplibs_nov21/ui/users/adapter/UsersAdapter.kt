@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.fylmr.poplibs_nov21.databinding.ItemUserBinding
-import ru.fylmr.poplibs_nov21.ui.users.UserItemView
+import ru.fylmr.poplibs_nov21.ui.users.IUserItemView
 import ru.fylmr.poplibs_nov21.ui.users.UsersPresenter
 
 class UsersAdapter(
@@ -15,7 +15,7 @@ class UsersAdapter(
         return UserViewHolder(
             ItemUserBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         ).apply {
-            itemView.setOnClickListener { presenter.itemClickListener() }
+            itemView.setOnClickListener { presenter.itemClickListener?.invoke(this) }
         }
     }
 
@@ -27,7 +27,7 @@ class UsersAdapter(
         return presenter.getCount()
     }
 
-    inner class UserViewHolder(private val vb: ItemUserBinding) : RecyclerView.ViewHolder(vb.root), UserItemView {
+    inner class UserViewHolder(private val vb: ItemUserBinding) : RecyclerView.ViewHolder(vb.root), IUserItemView {
 
         override var pos: Int = -1
 

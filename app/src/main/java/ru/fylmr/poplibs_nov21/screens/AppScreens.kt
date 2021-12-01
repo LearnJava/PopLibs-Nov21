@@ -1,11 +1,12 @@
 package ru.fylmr.poplibs_nov21.screens
 
 import com.github.terrakok.cicerone.androidx.FragmentScreen
+import moxy.MvpAppCompatFragment
 import ru.fylmr.poplibs_nov21.ui.users.UsersFragment
 
-object AppScreens {
+class AppScreens() {
 
-    fun usersScreen() = FragmentScreen {
-        UsersFragment()
+    fun usersScreen(myScreen: MvpAppCompatFragment) = FragmentScreen {
+        myScreen
     }
 }

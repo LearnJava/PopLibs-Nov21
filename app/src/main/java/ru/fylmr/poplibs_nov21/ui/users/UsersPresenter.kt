@@ -1,10 +1,12 @@
 package ru.fylmr.poplibs_nov21.ui.users
 
 import com.github.terrakok.cicerone.Router
+import com.github.terrakok.cicerone.androidx.FragmentScreen
 import moxy.MvpPresenter
 import ru.fylmr.poplibs_nov21.domain.GithubUsersRepository
 import ru.fylmr.poplibs_nov21.model.GithubUserModel
 import ru.fylmr.poplibs_nov21.ui.base.IListPresenter
+import ru.fylmr.poplibs_nov21.ui.main.UserProfileFragment
 
 class UsersPresenter(
     private val router: Router,
@@ -18,7 +20,10 @@ class UsersPresenter(
 
         loadData()
 
-        usersListPresenter.itemClickListener = {} // todo
+        usersListPresenter.itemClickListener = { itemView ->
+            val user = usersListPresenter.users[itemView.pos]
+            router.navigateTo(FragmentScreen { UserProfileFragment.newInstance(user) })
+        } // todo
     }
 
     private fun loadData() {
@@ -33,15 +38,15 @@ class UsersPresenter(
         return true
     }
 
-    class UsersListPresenter : IListPresenter<UserItemView> {
+    class UsersListPresenter : IListPresenter<IUserItemView> {
 
         val users = mutableListOf<GithubUserModel>()
 
-        override var itemClickListener = { }
+        override var itemClickListener: ((IUserItemView) -> Unit)? = null
 
         override fun getCount() = users.size
 
-        override fun bindView(view: UserItemView) {
+        override fun bindView(view: IUserItemView) {
             val user = users[view.pos]
             view.setLogin(user.login)
         }
