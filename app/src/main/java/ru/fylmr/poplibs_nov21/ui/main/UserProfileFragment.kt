@@ -49,8 +49,10 @@ private val presenter by moxyPresenter { UserDetailsPresenter(App.instance.route
     }
 //=================================================
 
+
     override fun onDestroyView() {
         _binding = null
+
         super.onDestroyView()
     }
 
